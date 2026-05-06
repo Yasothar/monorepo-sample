@@ -1,1 +1,2 @@
 Sample App A
+This is a patch update for App A
