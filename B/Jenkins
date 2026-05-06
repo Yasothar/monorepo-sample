@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Detect and Build Project B') {
+            when {
+                // This stage ONLY runs if changes occurred inside the 'A/' directory
+                changeset "B/**"
+            }
+            steps {
+                echo 'Changes detected in Project B. Starting build...'
+                // Simulate your build commands here (e.g., npm run build, mvn clean package)
+                dir('B') {
+                    sh 'echo "Building Project B..."'
+                    // If on Windows, use: bat 'echo Building Project B...'
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs() // Clean workspace after completion
+        }
+    }
+}
