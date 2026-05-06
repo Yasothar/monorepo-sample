@@ -3,3 +3,5 @@ Sample App B
 Adding a new feature
 
 Adding feature 2
+
+Test - all 3 repos
