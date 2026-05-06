@@ -2,25 +2,46 @@ pipeline {
     agent any
 
     stages {
-        stage('Detect and Build Project C') {
+        stage('Build Project A') {
             when {
-                // This stage ONLY runs if changes occurred inside the 'C/' directory
+                changeset "A/**"
+            }
+            steps {
+                echo 'Detected changes in Project A. Building...'
+                dir('A') {
+                    bat 'echo "Running build for A..."'
+                }
+            }
+        }
+
+        stage('Build Project B') {
+            when {
+                changeset "B/**"
+            }
+            steps {
+                echo 'Detected changes in Project B. Building...'
+                dir('B') {
+                    bat 'echo "Running build for B..."'
+                }
+            }
+        }
+
+        stage('Build Project C') {
+            when {
                 changeset "C/**"
             }
             steps {
-                echo 'Changes detected in Project C. Starting build...'
-                // Simulate your build commands here (e.g., npm run build, mvn clean package)
+                echo 'Detected changes in Project C. Building...'
                 dir('C') {
-                    sh 'echo "Building Project C..."'
-                    // If on Windows, use: bat 'echo Building Project C...'
+                    bat 'echo "Running build for C..."'
                 }
             }
         }
     }
-    
+
     post {
-        always {
-            cleanWs() // Clean workspace after completion
+        cleanup {
+            cleanWs()
         }
     }
 }
